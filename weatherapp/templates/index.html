@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Weather Forecast</title>
+    <meta name="keywords" content="weather, weather forecast">
+    <link href="/static/Bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+
+    <style>
+
+        div{
+            border: 0px solid red;
+        }
+
+
+        body {
+            background-image: url("/static/images/wee.jpg");
+            /* img src="/static/images/sunny.jpg" alt="Logo",
+            img src="/static/images/sunn.jpg" alt="Logo", */
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            background-color: gray;
+        }
+
+        .overlay {
+            position: relative;
+            display: block;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            min-height: 600px;
+            padding: 20px;
+        }
+
+        .logo img {
+            height: 100px;
+            width: auto;
+        }
+
+        h2 {
+            margin-top: 10px;
+            color: white;
+            font-size: 60px;
+        }
+
+        .search-container {
+            margin-left: 9%;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .search-button {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .data-content {
+            margin-top: 30px;
+            color: white;
+        }
+
+        .map {
+            height: 300px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid overlay">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="logo">
+
+                {% if data %}
+
+                <a href="/"> <img src="http://openweathermap.org/img/w/{{ data.weather.0.icon}}.png" alt="Logo"> </a>
+
+                {% endif %}
+
+
+              
+            </div>
+        </div>
+
+        <div class="col">
+                
+           <br><br><br>
+            
+                <h2> WE BRING THE WEATHER <br> OF THE WORLD <br> TO YOUR PALM! </h2>
+
+                {% set messages = get_flashed_messages() %}
+                {% for m in messages %}
+                <p class="alert alert-danger"> {{ m }} </p>
+                {% endfor %}
+                    
+                <br><br><br>
+
+                <div class="search-container col-8">
+                    <form action="/search_weather">
+
+                    <input name="city" type="text" placeholder="Enter city to search...">
+                
+                    <button class="btn btn-lg btn-outline-primary search-button">  Search  </button>
+
+                </form>
+                </div>
+        </div>
+    </div>
+
+    {% if data %}
+
+        <div class="row mt-5">
+            <div class="col-md-2 map" style="margin-left: 35%;">
+                <p class="data-content"> CITY </p>
+
+                    <div class="row">
+                        <div class="col"> 
+                            <p class="data-content"> TEMP  </p>
+                        </div>    
+                    </div>
+
+                    <div class="row">
+                        <div class="col"> 
+                            <p class="data-content"> WEATHER </p>
+                        </div>    
+                    </div>
+
+                    <div class="row">
+                        <div class="col"> 
+                            <p class="data-content"> DESCRIPTION </p>
+                        </div>    
+                    </div>
+
+            </div>
+
+            
+
+              
+                <div class="col-md-2 map">
+
+                    <p class="data-content"> {{ city }} </p>
+                    
+                    <div class="row">
+                        <div class="col">
+                            <p class="data-content" style="font-size: 35px;"> {{ data.main.temp}} °C </p>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col">
+                            <p class="data-content"> {{ data.weather.0.main|title }} </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <p class="data-content"> {{ data.weather.0.description|title }} </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        {% endif %}
+    </div>
+</div>
+</body>
+
+<script type="text/javascript">
+
+    window.onload = function(){
+    window.location.href = "/auto_vpn_locator"
+    };
+
+ 
+
+    if (real_weather == "Rain" || "Cloud"){
+        document.body.style.backgroundImage = 'url("/static/images/rain.jpg")';
+     }
+     else if(real_weather == "Clear" || "Sunny"){
+        document.body.style.backgroundImage = 'url("/static/images/sunny.jpg")';
+     }
+     else{
+        document.body.style.backgroundImage = 'url("/static/images/wee.jpg")';
+     }
+
+     
+    
+</script>
+</html>
+
+
